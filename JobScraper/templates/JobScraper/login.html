@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>{% load static %}
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Jobs4You</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='stylesheet' type='text/css' media='screen' href="{% static 'main.css' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.5.1.js" 
+      integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" 
+      crossorigin="anonymous">
+  </script>
+</head>
+<body style="font-family: 'Jura', sans-serif;" class="bodyLogin"> 
+  <div class="login">
+
+    {% block content %}
+    
+    {% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+  
+    {% if next %}
+    {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+      please login with an account that has access.</p>
+      {% else %}
+        <p>Please login to see this page.</p>
+      {% endif %}
+    {% endif %}
+  
+    <form action="http://localhost:8000/JobScraper/authentication" class="loginForm" method="post">
+      {% csrf_token %}
+      <div>
+        <label style="font-size: 5vh;">Username:</label><input id="username" type="text" name="username" style="padding-top: 1vh;"><br>
+      </div>
+      <div>
+        <label  style="font-size: 5vh;">Password: </label><input id="password" type="password" name="password" style="padding-top: 1vh; font-size: 24px;"><br>
+      </div>
+      <input type="submit" value="Login" class="button">
+  </form>
+  
+  {# Assumes you setup the password_reset view in your URLconf #}
+  <p style="font-size: 2vh;"><a href="{% url 'password_reset' %}">Lost password?</a></p>
+  
+  <p style="font-size: 2vh;"><a href="{% url 'create_account' %}">Create Account</a></p>
+  
+  {% endblock %}
+  </div>
+</body>
+</html>

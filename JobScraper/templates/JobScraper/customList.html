@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% load static %}
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <title>Page Title</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <link rel='stylesheet' type='text/css' media='screen' href="{% static 'main.css' %}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300&display=swap" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.5.1.js" 
+            integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" 
+            crossorigin="anonymous">
+        </script>
+    </head>
+    <body style="font-family: 'Jura', sans-serif;display: flex;" class="bodyResults"> 
+        <p style="margin-top: 8vh;font-size: 5vh;">
+            {{listName}}:
+        </p>
+        <div class="resultsHeader">
+            <script>
+                $( document ).ready(function() {
+                    let dropdown = $('#location-dropdown');
+                
+                    dropdown.prop('selectedIndex', 0);
+                
+                    const url = "https://raw.githubusercontent.com/Ioatsi/MiscellaneousFiles/main/cities.json";
+                    
+                    $.getJSON(url, function (data) {
+                        $.each(data, function (key, entry) {
+                            opt= document.createElement("option");
+                            opt.setAttribute("value",entry.cityName);
+                            opt.setAttribute("text",entry.cityName);
+                            opt.innerHTML=entry.cityName;
+                            dropdown.append(opt);
+                        })
+                    });
+                });
+                $( document ).on('click','.jobTypeLabel',function(){
+                    if (document.getElementById('jobType').checked == false){
+    
+                        document.getElementById('jobType').checked = true;
+                        document.getElementById("jobTypeLabel").classList.add('jobTypeLabelChecked');
+    
+                    }
+                    else{
+                        
+                            document.getElementById("jobTypeLabel").classList.remove('jobTypeLabelChecked');
+                            document.getElementById('jobType').checked = false;
+    
+                    }
+                });
+            </script>
+    
+            <div class="homeButton" onclick="window.location.href='http://localhost:8000/JobScraper/'">
+                <img src="{% static 'jobs4youSmall.png' %}" class="jobs4yousmall" style="width: -webkit-fill-available;padding-top: 5%;">
+            </div>
+            
+            <form action="http://localhost:8000/JobScraper/scrapByTerm" method="post" class="searchForm">
+                {% csrf_token %}
+                
+                <input id="term" type="text" name="term" class="resultTerm">
+                <input type="text" id="page" name="page" value="1" class="hiddenForms">
+    
+                <select id="location-dropdown" name="location" class="locationDropdown" >
+                    <option selected="selected" value="noLocation">Τοποθεσία</option>
+                </select>
+    
+                <input type="hidden" name="jobType" value="0">
+                <div>
+                    <button type="button" for="jobType" class="jobTypeLabel" id="jobTypeLabel"> Πλήρης Απασχόληση </button>
+                    <input type="checkbox" id="jobType" name="jobType" value="fullTime" class="hiddenForms">
+                </div>
+    
+                <input type="submit" value="Αναζήτηση" class="search">
+            </form>
+            <p style="display: flex;align-items: center; font-size: 128%;">
+            {%  if request.user.is_authenticated %}
+                <div class="container" onclick="bars(this)">
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
+                </div>  
+            {% endif %}
+            {% if not request.user.is_authenticated %}
+                <a href="http://localhost:8000/JobScraper/loginPage" >Login</a>
+                /
+                <a href="http://localhost:8000/JobScraper/loginPage" >Sign Up</a>
+            </p>
+            {% endif %}
+        </div>
+        <div class="menu change" id="menu">
+            <div class="saved" onclick="document.getElementById('saved').click()">Αποθηκευμένα</div>
+            <div class="history" onclick="document.getElementById('history').click()">Ιστορικό</div>
+            <div id="customLists">
+                <div class="customListsButton" style="padding-block: 1.23vh" onclick="toggleCustomLists()">Λιστες ▼</div>
+                {% for key, value in lists.items%}
+                <div class="customListNames gone" onclick="window.location.href='http://localhost:8000/JobScraper/customList/{{value.listName}}'">{{value.listName}}</div>
+                {% endfor %}
+            </div>
+            <div style="grid-row-start: 4;">
+                <div class="toggleMakeNewList" onclick="toggleMakeNewList()">Δημιουργία λίστας</div>
+                <div class="createNewList gone" id="createListForm">
+                    {% csrf_token %}
+                    <input type="text" tag="List name" id="enterListName">
+                    <div > 
+                        <p style="text-align: center;">
+                            Τα ονόματα περιορίζονται σε λέξεις χωρίς κενά προσωρινά.
+                            Ευχαριστούμε για την κατανοήση.
+                        </p>
+                    </div>
+                    <div onclick="makeNewList(document.getElementById('enterListName').value)" class="addListBtn">Προσθήκη</div>
+                </div>
+            </div>
+            <div class="logout" onclick="document.getElementById('logout').click()">Αποσύνδεση</div>
+            <div style="display: none;">
+                <!-- Links -->
+               <form action="http://localhost:8000/JobScraper/savedListings" >
+                {% csrf_token %}
+                <input type="submit" value="Saved" id="saved" class="saved">
+             </form>
+             <form action="http://localhost:8000/JobScraper/history" >
+                 {% csrf_token %}
+                 <input type="submit" value="History" id="history" class="history">
+             </form>
+                <a href="http://localhost:8000/JobScraper/logoutPage" id="logout" class="logout">Logout</a>
+            </div>
+        </div>
+
+
+        <div class="jobListings">
+            {% for key, value in results.items %}
+                {%if value.id|divisibleby:2 %}
+                    <div class="jobListing even">
+                {%else%}
+                <div class="jobListing">
+                {%endif%}
+                        <div class="info">
+                            <div class="title">{{ value.title }}</div>
+                            <h2>{{ value.location }}</h2>
+                            <h3>Πηγή: {{ value.source }}</h3>                        
+                            <h3 style="grid-column: 1/4;">{{value.details}}</h3>
+                        </div>
+                        {%  if request.user.is_authenticated %}
+                                    <input type="button" onclick="goToOriginal('{{value.id}}')" value="Πήγαινε στην πηγή" class="button" style="align-self: end;justify-self: end;">
+                        <div class="saveForms">
+                            <!-- SAVE  -->
+                                <div class="saveCustomListing" method="post" id='saveCustomListing{{value.id}}'>
+                                    {% csrf_token %}
+                                    <input type="text" id='{{value.id}}' name="title" value='{{ value.title }}' class="hiddenForms title">
+                                    <input type="text" id='{{value.id}}' name="location" value='{{ value.location }}' class="hiddenForms location">
+                                    <input type="text" id='{{value.id}}' name="source" value='{{ value.source }}' class="hiddenForms source">
+                                    <input type="text" id='{{value.id}}' name="link" value='{{ value.link }}' class="hiddenForms link">
+                                    <input type="text" id='{{value.id}}' name="details" value='{{ value.details }}' class="hiddenForms details">
+                                    
+                                </div>
+                        </div>    
+                        {%else%}
+                                <input type="button" onclick="window.location.href='{{ value.link }}'" value="Go to original listing" class="button">
+                        {%endif%}
+                </div>
+            {% endfor %}
+        </div>
+    
+    
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js" 
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" 
+          crossorigin="anonymous">
+        
+    </script>
+    
+             
+<script type="text/javascript">
+    function toggleSaveToCustomList(id){
+            list=document.getElementsByClassName("customListNamesSave"+id);
+            document.getElementById("customListsSave"+id).classList.toggle('gone');
+            l = list.length
+            for(i=0;i<l;i++){
+                list[i].classList.toggle('gone');
+            }
+        }
+    function goToPage(page){
+        document.getElementById("page").value=page;
+        document.getElementById("goToPg").click();
+    }
+    function makeNewList(name){
+        $.ajax({
+          type:'POST',
+          url:'{% url "createList" %}',
+          data:
+          {
+              listName:name,
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          },success:function(){
+              var newList = document.createElement('div');
+              listName = document.createTextNode(name);
+              newList.appendChild(listName);
+              newList.setAttribute('class',"customListNames");
+              gone = document.getElementsByClassName("customListNames")[0].classList.contains('gone');   
+              if (gone){
+                newList.setAttribute('class','gone');
+              }               
+              newList.setAttribute('onclick',"window.location.href='http://localhost:8000/JobScraper/customList/"+name);
+              var container = document.getElementById("customLists");
+              container.appendChild(newList);
+          }
+          });
+    }
+    function toggleMakeNewList(){
+        document.getElementById("createListForm").classList.toggle('gone');
+    }
+    function toggleCustomLists(){
+        l = document.getElementsByClassName("customListNames").length;
+        for(i=0;i<l;i++){
+            document.getElementsByClassName("customListNames")[i].classList.toggle('gone');
+        }
+    }
+    function saveListing(id){
+            
+            $.ajax({
+          type:'POST',
+          url:'{% url "saveListing" %}',
+          data:
+          {
+            title:document.getElementById("saveCustomListing"+id).getElementsByClassName("title")[0].value,
+            location:document.getElementById("saveCustomListing"+id).getElementsByClassName("location")[0].value,
+            source:document.getElementById("saveCustomListing"+id).getElementsByClassName("source")[0].value,
+            link:document.getElementById("saveCustomListing"+id).getElementsByClassName("link")[0].value,
+            details:document.getElementById("saveCustomListing"+id).getElementsByClassName("details")[0].value,
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          },
+          success:function(){
+              alert('Saved');
+            }
+          })
+      }
+    function goToOriginal(id){
+            $.ajax({
+            type:'POST',
+            url:'{% url "addToHistory" %}',
+            data:
+            {
+                title:document.getElementById("saveCustomListing"+id).getElementsByClassName("title")[0].value,
+                location:document.getElementById("saveCustomListing"+id).getElementsByClassName("location")[0].value,
+                source:document.getElementById("saveCustomListing"+id).getElementsByClassName("source")[0].value,
+                link:document.getElementById("saveCustomListing"+id).getElementsByClassName("link")[0].value,
+                details:document.getElementById("saveCustomListing"+id).getElementsByClassName("details")[0].value,
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+            },
+            success:function(){
+                window.location.href=document.getElementById("saveCustomListing"+id).getElementsByClassName("link")[0].value;
+                  }
+            })
+        };
+    function saveCustomListing(id,list){
+            $.ajax({
+            type:'POST',
+            url:'{% url "saveCustomListing" %}',
+            data:
+            {
+                title:document.getElementById("saveCustomListing"+id).getElementsByClassName("title")[0].value,
+                location:document.getElementById("saveCustomListing"+id).getElementsByClassName("location")[0].value,
+                source:document.getElementById("saveCustomListing"+id).getElementsByClassName("source")[0].value,
+                link:document.getElementById("saveCustomListing"+id).getElementsByClassName("link")[0].value,
+                details:document.getElementById("saveCustomListing"+id).getElementsByClassName("details")[0].value,
+                listName:list,
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+            },
+            success:function(){
+                alert('Saved');
+                  }
+            })
+        };
+        function bars(x) {
+            x.classList.toggle("change");
+            document.getElementById("menu").classList.toggle("change");
+        }
+</script>
+       
+    </body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Jobs4You</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'main.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.js" 
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" 
+        crossorigin="anonymous">
+    </script>
+</head>
+<body style="font-family: 'Jura', sans-serif;" class="bodyHome">
+    <div class="mainSearch">
+        <script>
+            $( document ).ready(function() {
+                let dropdown = $('#location-dropdown');
+            
+                dropdown.prop('selectedIndex', 0);
+            
+                const url = "https://raw.githubusercontent.com/Ioatsi/MiscellaneousFiles/main/cities.json";
+                // Populate dropdown with list of provinces
+                $.getJSON(url, function (data) {
+                    $.each(data, function (key, entry) {
+                        opt= document.createElement("option");
+                        opt.setAttribute("value",entry.cityName);
+                        opt.setAttribute("text",entry.cityName);
+                        /* opt.addEventListener("click",function(){
+                            dropdown.classList.toggle('locationDropdownSelected');
+                        }); */
+                        opt.innerHTML=entry.cityName;
+                        dropdown.append(opt);
+                    })
+                });
+            });
+            $( document ).on('click','.jobTypeLabel',function(){
+                if (document.getElementById('jobType').checked == false){
+
+                    document.getElementById('jobType').checked = true;
+                    document.getElementById("jobTypeLabel").classList.add('jobTypeLabelChecked');
+
+                }
+                else{
+                    
+                        document.getElementById("jobTypeLabel").classList.remove('jobTypeLabelChecked');
+                        document.getElementById('jobType').checked = false;
+
+                }
+            });
+        </script>
+        <div>
+            <img src="{% static 'jobs4you.png' %}" class="logo">
+            <h2 class='tagline'>Δες όλες τις αγγελίες σε ένα μέρος, με ένα κλικ</h2>
+        </div>
+        <form action="http://localhost:8000/JobScraper/scrapByTerm" method="post">
+            {% csrf_token %}
+            <input id="term" type="text" name="term" class="term"><br>
+            <input type="text" id="page" name="page" value="1" style="visibility: hidden;"><br>
+            <div class="buttons">
+                <select id="location-dropdown" name="location" class="locationDropdown" onChange="selectLoc()">
+                    <option selected="selected" value="noLocation">Τοποθεσία</option>
+                </select>
+                <input type="hidden" name="jobType" value="0">
+                <div class="switch">
+                    <button type="button" for="jobType" class="jobTypeLabel" id="jobTypeLabel"> Πλήρης Απασχόληση </button>
+                    <input type="checkbox" id="jobType" name="jobType" value="fullTime">
+                </div>
+                <input type="submit" value="Αναζήτηση" class="search">
+            </div>
+        </form>
+    </div>
+    {%  if request.user.is_authenticated %}
+        <a href="http://localhost:8000/JobScraper/logoutPage" class="authentication">Logout</a>
+    {% endif %}
+    {% if not request.user.is_authenticated %}
+        <p class="authentication">
+            <a href="http://localhost:8000/JobScraper/loginPage" >Login</a>
+            /
+            <a href="http://localhost:8000/JobScraper/loginPage" >Sign Up</a>
+        </p>
+    {% endif %}
+    <script>
+        function selectLoc(){
+            document.getElementById('location-dropdown').classList.toggle('locationDropdownSelected');
+        }
+    </script>
+</body>
+</html>

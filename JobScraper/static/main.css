@@ -1,0 +1,405 @@
+.bodyHome{
+    background: rgb(193,242,162);
+    background: linear-gradient(0deg, rgba(193,242,162,1) 0%, rgba(9,9,121,0) 35%, rgba(0,212,255,0) 100%);
+    background-repeat: no-repeat;
+    height: 100%;
+    margin: 0;
+    background-attachment: fixed;
+    display: grid;
+    grid-template-rows: 1fr 4fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr;
+}
+.bodyLogin{
+    background: linear-gradient(0deg, rgba(193,242,162,1) 0%, rgba(9,9,121,0) 35%, rgba(0,212,255,0) 100%);
+    background-repeat: no-repeat;
+    height: 100%;
+    margin: 0;
+    background-attachment: fixed;
+    display: grid;
+    grid-template-rows: 1fr 1fr 4fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr;
+    justify-items: center;
+}
+.mainSearch{
+    grid-column-start: 2;
+    grid-row-start: 2;
+}
+.logo{
+    width: 70%;
+    margin-left: 14%;
+}
+.term{
+    border-radius: 10px;    
+    width: 100%;
+    height: 44px;
+    border-top-style: solid;
+    border-right-style: solid;
+    border-left-style: solid;
+    border-bottom-style: solid;
+    background-color: #fff;
+}
+.tagline{    
+    font-size: 40px;
+    margin-left: 35px;
+}
+
+input[type="text"]
+{
+    font-size:24px;
+    padding-bottom: 1px;
+}
+.search{
+    border-top-style: solid;
+    border-right-style: solid;
+    border-left-style: solid;
+    border-bottom-style: solid;
+    border-color: rgb(103 177 57);
+    height: 50px;
+    width: 205px;
+    font-size: 29px;
+    border-radius: 27px;
+    background-color: rgb(103 177 57);
+    color: white;
+}
+.search:hover {
+    background: white;
+    color: rgb(103 177 57);
+    transition: 0.4s;
+    cursor: pointer;
+}
+.jobTypeLabel{
+    border-top-style: solid;
+    border-right-style: solid;
+    border-left-style: solid;
+    border-bottom-style: solid;
+    border-color: rgb(103 177 57);
+    height: 50px;
+    width: 205px;
+    font-size: 20px;
+    border-radius: 27px;
+    background-color: rgb(103 177 57);
+    color: white;
+    outline: solid 0px rgb(103 177 57);
+}
+.switch{
+    margin-left: 25px;
+}
+.jobTypeLabel:hover{
+    background: white;
+    color: rgb(103 177 57);
+    transition: 0.4s;
+    cursor: pointer;
+}
+#jobType{
+    opacity: 0;
+}
+.jobTypeLabelChecked{
+    background: white;
+    color: rgb(103 177 57);
+    outline-width: 1px;
+    text-decoration: underline;
+    transition: outline 0.5s linear;
+}
+.locationDropdown{
+    border-top-style: solid;
+    border-right-style: solid;
+    border-left-style: solid;
+    border-bottom-style: solid;
+    border-color: rgb(103 177 57);
+    background-color: rgb(103 177 57);
+    color: white;
+    width: 205px;
+    height: 50px;
+    text-align: center;
+    font-size: 30px;
+    border-radius: 27px;
+}
+.locationDropdownSelected{
+    background: white;
+    color: rgb(103 177 57);
+    text-decoration: underline;
+    transition: outline 0.5s linear;
+}
+.locationDropdown:hover{
+    background: white;
+    color: rgb(103 177 57);
+    transition: 0.4s;
+    cursor: pointer;
+}
+.buttons{
+    display: flex; 
+    justify-content: center;
+}
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;       /* Remove default arrow */
+ }
+ .authentication{
+    grid-row-start: 3;
+    grid-column-start: 2;
+    justify-self: center;
+    align-self: center;
+    font-size: 28px;
+ }
+
+ .resultsHeader{
+    width: 100%;
+    position: fixed;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    height: 8vh;
+    border-bottom: solid;
+    border-bottom-color: #353535;
+    background: rgb(193,242,162);
+    background: linear-gradient(0deg, rgba(193,242,162,1) 0%, rgba(255,255,255,1) 35%, rgba(255,255,255,1) 100%);
+    background-repeat: no-repeat;
+ }
+ .jobListing{ 
+    margin-inline: 20%;
+    border-bottom: solid;
+    border-bottom-color: #5a9238;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    padding-bottom: 2vh;
+    padding-top: 2vh;    
+    padding-inline: 3vh;
+ }
+ .jobListing.even{
+     background: rgb(194 242 163);
+
+ }
+ .jobs4yousmall{
+    padding-bottom: 1vh;
+ }
+ .searchForm{    
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-around;
+    width: 75%;
+ }
+ .bodyResults{
+    background: linear-gradient(0deg, rgba(193,242,162,1) 0%, rgba(9,9,121,0) 35%, rgba(0,212,255,0) 100%);
+    background-repeat: no-repeat;
+    margin: 0;
+    background-attachment: fixed;
+    overflow-x: hidden;
+ }
+ .jobListings{
+    padding-top: 8vh; 
+    display: flex;
+    flex-wrap: wrap;
+ }
+ .hiddenForms{
+     visibility: hidden;
+     width: 0px;
+     height: 0px;
+     position: absolute;
+
+}
+.button{
+    border-top-style: solid;
+    border-right-style: solid;
+    border-left-style: solid;
+    border-bottom-style: solid;
+    border-color: rgb(103 177 57);
+    height: 50px;
+    width: 205px;
+    font-size: 110%;
+    border-radius: 27px;
+    background-color: rgb(103 177 57);
+    text-align: center;
+    color: white;
+}
+.button:hover {
+    background: white;
+    color: rgb(103 177 57);
+    transition: 0.4s;
+    cursor: pointer;
+}
+.title{
+    text-decoration: solid;
+    font-size: 5vh;
+    font-weight: bold;
+    grid-column-end: 2;
+}
+.resultTerm{
+    border-radius: 10px;
+    width: 48%;
+    height: 44px;
+    border-top-style: solid;
+    border-right-style: solid;
+    border-left-style: solid;
+    border-bottom-style: solid;
+    background-color: #fff;
+}
+.login{
+    grid-column-start: 2;
+    grid-row-start: 2;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.loginForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.loginForm > *{
+    margin: 1vh;
+}
+.saveForms{    
+    grid-column-start: 4;
+    grid-row-start: 1;
+    justify-self: right;
+    align-self: center;
+    height: 100%;
+}
+.saveCustomListing{    
+    display: grid;
+    grid-row-gap: 1vh;
+}
+.info{
+    grid-column: 1/4;
+    grid-row: 1/3;
+}
+.container {
+    display: inline-block;
+    cursor: pointer;
+    align-self: center;
+  }
+  
+  .bar1, .bar2, .bar3 {
+    width: 35px;
+    height: 5px;
+    background-color: #333;
+    margin: 6px 0;
+    transition: 0.4s;
+  }
+  
+  .change .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+    transform: rotate(-45deg) translate(-9px, 6px);
+  }
+  
+  .change .bar2 {opacity: 0;}
+  
+  .change .bar3 {
+    -webkit-transform: rotate(45deg) translate(-8px, -8px);
+    transform: rotate(45deg) translate(-8px, -8px);
+  }
+  .menu{
+    transition: 0.4s;
+    margin-top: 8.3vh;
+    margin-left: 91%;
+    width: 18vh;  
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 13fr 1fr;
+    position: fixed;
+    height: -webkit-fill-available;
+    background: rgb(194 242 163);
+  }
+  .menu.change{
+      margin-left: 100%;
+  }
+  .saved, .history, .customListsButton, .logout, .addListBtn{
+    transition: 0.4s;
+    background:rgb(194 242 163);
+    border: 0;    
+    display: grid;
+    justify-items: center;
+    align-items: center;
+  }
+  .saved:hover, .history:hover, .customListsButton:hover, .logout:hover, .customListNames:hover,.toggleMakeNewList:hover,.addListBtn:hover{
+    transition: 0.4s;
+    background:  rgb(103 177 57);
+    cursor: pointer;
+  }
+  .logout{
+    grid-row-end: 7;
+  }
+  .customListNames{
+      display: grid;
+      justify-items: center;
+      align-items: center;
+      transition: 0.4s;
+      padding-block: 0.7vh;
+  }
+  .customListNames.gone{
+      position: absolute;
+      margin-left: 100%;
+  }
+  .createNewList{
+    display: grid;
+    justify-items: center;
+    transition: 0.4s;
+  }
+  .createNewList.gone{
+      margin-left: 100%;
+  }
+  .toggleMakeNewList{
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    transition: 0.4s;
+    padding-block: 1vh;
+  }
+  #enterListName{
+    width: 91%;
+    background: #ffffff;
+    border: 0;
+    text-align: center;
+    font-size: 2vh;
+    color: #877c7c;
+  }
+  .addListBtn{
+    width: 100%;
+    padding-block: 1vh;
+  }
+  .button.pages{
+    width: 5vh;
+    height: 5vh;    
+    display: grid;
+    align-items: center;    
+    margin-inline: 1vh;
+  }
+  .button.pages.selected{
+      background: white;
+      color: rgb(103 177 57);
+      transition: 0.4s;
+      cursor: default;
+  }
+  .homeButton{
+    width: 6%;
+    display: flex;
+    justify-items: center;
+  }
+  .homeButton:hover{
+      cursor: pointer;
+  }
+  [class^='customListNamesSave']{
+      transition: 0.4s;    
+      display: grid;
+      justify-items: center;
+      padding-block: 0.5vh;
+    }
+    [class^='customListNamesSave']:hover{
+        transition: 0.4s;
+        background:  rgb(103 177 57);
+        cursor: pointer;
+    }
+  [class^='customListNamesSave'].gone, .customListsSave.gone{
+      opacity: 0%;
+      margin-left: 100%;   
+      transition: 0.4s;
+  }
+  .customListsSave{
+    background: rgb(137, 190, 102);
+  }
+  .toggleSaveToCustomList{
+    display: grid;
+    align-items: center;
+    font-weight: bolder;
+  }
