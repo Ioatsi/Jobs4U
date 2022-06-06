@@ -55,11 +55,11 @@
                 });
             </script>
     
-            <div class="homeButton" onclick="window.location.href='queous-beach-52201.herokuapp.com/JobScraper/'">
+            <div class="homeButton" onclick="window.location.href=''">
                 <img src="{% static 'jobs4youSmall.png' %}" class="jobs4yousmall" style="width: -webkit-fill-available;padding-top: 5%;">
             </div>
             
-            <form action="queous-beach-52201.herokuapp.com/JobScraper/scrapByTerm" method="post" class="searchForm">
+            <form action="scrapByTerm" method="post" class="searchForm">
                 {% csrf_token %}
                 
                 <input id="term" type="text" name="term" class="resultTerm">
@@ -86,9 +86,9 @@
                 </div>  
             {% endif %}
             {% if not request.user.is_authenticated %}
-                <a href="queous-beach-52201.herokuapp.com/JobScraper/loginPage" >Login</a>
+                <a href="loginPage" >Login</a>
                 /
-                <a href="queous-beach-52201.herokuapp.com/JobScraper/loginPage" >Sign Up</a>
+                <a href="loginPage" >Sign Up</a>
             </p>
             {% endif %}
         </div>
@@ -98,7 +98,7 @@
             <div id="customLists">
                 <div class="customListsButton" style="padding-block: 1.23vh" onclick="toggleCustomLists()">Λιστες ▼</div>
                 {% for key, value in lists.items%}
-                <div class="customListNames gone" onclick="window.location.href='queous-beach-52201.herokuapp.com/JobScraper/customList/{{value.listName}}'">{{value.listName}}</div>
+                <div class="customListNames gone" onclick="window.location.href='customList/{{value.listName}}'">{{value.listName}}</div>
                 {% endfor %}
             </div>
             <div style="grid-row-start: 4;">
@@ -118,15 +118,15 @@
             <div class="logout" onclick="document.getElementById('logout').click()">Αποσύνδεση</div>
             <div style="display: none;">
                 <!-- Links -->
-               <form action="queous-beach-52201.herokuapp.com/JobScraper/savedListings" >
+               <form action="savedListings" >
                 {% csrf_token %}
                 <input type="submit" value="Saved" id="saved" class="saved">
              </form>
-             <form action="queous-beach-52201.herokuapp.com/JobScraper/history" >
+             <form action="history" >
                  {% csrf_token %}
                  <input type="submit" value="History" id="history" class="history">
              </form>
-                <a href="queous-beach-52201.herokuapp.com/JobScraper/logoutPage" id="logout" class="logout">Logout</a>
+                <a href="logoutPage" id="logout" class="logout">Logout</a>
             </div>
         </div>
 
@@ -204,7 +204,7 @@
               if (gone){
                 newList.setAttribute('class','gone');
               }               
-              newList.setAttribute('onclick',"window.location.href='queous-beach-52201.herokuapp.com/JobScraper/customList/"+name);
+              newList.setAttribute('onclick',"window.location.href='customList/"+name);
               var container = document.getElementById("customLists");
               container.appendChild(newList);
           }
