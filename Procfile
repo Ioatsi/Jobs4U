@@ -1,1 +1,1 @@
-web: gunicorn Jobs4U.wsgi --log-file -
+web: gunicorn Tsilikas_Ioannis_164768_JobScraper.wsgi --log-file -
