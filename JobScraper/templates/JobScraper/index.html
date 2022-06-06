@@ -58,7 +58,7 @@
             <img src="{% static 'jobs4you.png' %}" class="logo">
             <h2 class='tagline'>Δες όλες τις αγγελίες σε ένα μέρος, με ένα κλικ</h2>
         </div>
-        <form action="http://localhost:8000/JobScraper/scrapByTerm" method="post">
+        <form action="queous-beach-52201.herokuapp.com/JobScraper/scrapByTerm" method="post">
             {% csrf_token %}
             <input id="term" type="text" name="term" class="term"><br>
             <input type="text" id="page" name="page" value="1" style="visibility: hidden;"><br>
@@ -76,13 +76,13 @@
         </form>
     </div>
     {%  if request.user.is_authenticated %}
-        <a href="http://localhost:8000/JobScraper/logoutPage" class="authentication">Logout</a>
+        <a href="queous-beach-52201.herokuapp.com/JobScraper/logoutPage" class="authentication">Logout</a>
     {% endif %}
     {% if not request.user.is_authenticated %}
         <p class="authentication">
-            <a href="http://localhost:8000/JobScraper/loginPage" >Login</a>
+            <a href="queous-beach-52201.herokuapp.com/JobScraper/loginPage" >Login</a>
             /
-            <a href="http://localhost:8000/JobScraper/loginPage" >Sign Up</a>
+            <a href="queous-beach-52201.herokuapp.com/JobScraper/loginPage" >Sign Up</a>
         </p>
     {% endif %}
     <script>
