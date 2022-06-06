@@ -61,3 +61,4 @@ class CustomListings(models.Model):
     listName = models.ForeignKey(Lists,on_delete=models.CASCADE)
     JobListing = models.ForeignKey(JobListing,on_delete=models.CASCADE)
     user = models.ForeignKey(User,on_delete=models.CASCADE, default=1)
+
