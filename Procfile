@@ -1,0 +1,1 @@
+web: gunicorn Jobs4U.wsgi --log-file -
