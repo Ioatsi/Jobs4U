@@ -177,8 +177,6 @@ def scrapByTerm(request):
             'location':formLocation
         }
         return render(request,'JobScraper/results.html',context)
-    else:
-        return HttpResponse('Sas')
 
 
  #Lists
